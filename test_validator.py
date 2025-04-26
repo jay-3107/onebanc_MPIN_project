@@ -175,7 +175,18 @@ def run_tests():
                 "weakness_reasons": []
             }
         },
-        # Test 15 - Removed (Year-based PIN pattern)
+        # Test 15 - (Year-based PIN pattern)
+        {
+            "name": "Test 15: Year-based PIN pattern",
+            "pin": "1998",
+            "demographics": {"dob": "1998-02-01"},
+            "pin_length": 4,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["DEMOGRAPHIC_DOB_SELF" , "COMMONLY_USED"]
+            }
+        },
+
         {
             "name": "Test 16: Reversed date pattern",
             "pin": "1020",
@@ -196,8 +207,34 @@ def run_tests():
                 "weakness_reasons": ["COMMONLY_USED"]
             }
         },
-        # Test 18 - Removed (PIN with invalid demographics)
-        # Test 19 - Removed (Multiple demographics with no match)
+        # Test 18 - (PIN with invalid demographics)
+        {
+            "name": "Test 18: PIN with invalid demographics",
+            "pin": "5678",
+            "demographics": {"dob": "invalid-date-format"},
+            "pin_length": 4,
+            "expected": {
+                "strength": "STRONG",  # Should not match invalid demographics
+                "weakness_reasons": []
+            }
+        },
+
+        # Test 19 - (Multiple demographics with no match)
+        {
+            "name": "Test 19: Multiple demographics with no match",
+            "pin": "7551",
+            "demographics": {
+                "dob": "1990-05-15",
+                "spouse_dob": "1992-08-20",
+                "anniversary": "2015-06-10"
+            },
+            "pin_length": 4,
+            "expected": {
+                "strength": "STRONG",
+                "weakness_reasons": []
+            }
+        },
+
         {
             "name": "Test 20: Spouse DOB with year in PIN",
             "pin": "9206",
@@ -350,7 +387,20 @@ def run_tests():
             }
         },
 
-        # Test 31 - Removed (Reversed year components)
+        # Test 31 -  (Reversed year components)
+        {
+            "name": "Test 31: Reversed year components",
+            "pin": "0490",
+            "demographics": {
+                "dob": "2004-07-25",
+                "spouse_dob": "1990-05-15"
+            },
+            "pin_length": 4,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["DEMOGRAPHIC_DOB_SELF", "DEMOGRAPHIC_DOB_SPOUSE"]
+            }
+        },
 
         # Reversed year combinations
         {
@@ -528,7 +578,263 @@ def run_tests():
                 "strength": "WEAK",
                 "weakness_reasons": ["DEMOGRAPHIC_DOB_SELF", "DEMOGRAPHIC_DOB_SPOUSE"]
             }
-        }
+        } , 
+        # 4-digit keyboard pattern test cases
+        {
+            "name": "Test 46: Keyboard pattern - Vertical down (7894)",
+            "pin": "7894",
+            "demographics": None,
+            "pin_length": 4,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        },
+        {
+            "name": "Test 47: Keyboard pattern - Horizontal right (4561)",
+            "pin": "4561",
+            "demographics": None,
+            "pin_length": 4,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        },
+        {
+            "name": "Test 48: Keyboard pattern - Vertical up (1478)",
+            "pin": "1478",
+            "demographics": None,
+            "pin_length": 4,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        },
+        {
+            "name": "Test 49: Keyboard pattern - Middle vertical (2580)",
+            "pin": "2580",
+            "demographics": None,
+            "pin_length": 4,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        },
+        {
+            "name": "Test 50: Keyboard pattern - Right vertical (3690)",
+            "pin": "3690",
+            "demographics": None,
+            "pin_length": 4,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        },
+        {
+            "name": "Test 51: Keyboard pattern - Backwards horizontal (3216)",
+            "pin": "3216",
+            "demographics": None,
+            "pin_length": 4,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        },
+        {
+            "name": "Test 52: Keyboard pattern - Diagonal (3698)",
+            "pin": "3698",
+            "demographics": None,
+            "pin_length": 4,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        },
+        {
+            "name": "Test 53: Keyboard pattern - Z pattern (1593)",
+            "pin": "1593",
+            "demographics": None,
+            "pin_length": 4,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        },
+        {
+            "name": "Test 54: Keyboard pattern - Diagonal backward (7531)",
+            "pin": "7531",
+            "demographics": None,
+            "pin_length": 4,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        },
+        {
+            "name": "Test 55: Keyboard pattern - Reverse middle down (8520)",
+            "pin": "8520",
+            "demographics": None,
+            "pin_length": 4,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        },
+
+        # 6-digit keyboard pattern test cases
+        {
+            "name": "Test 56: Keyboard pattern - Knight's move (147258)",
+            "pin": "147258",
+            "demographics": None,
+            "pin_length": 6,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        },
+        {
+            "name": "Test 57: Keyboard pattern - Snake pattern (123654)",
+            "pin": "123654",
+            "demographics": None,
+            "pin_length": 6,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        },
+        {
+            "name": "Test 58: Keyboard pattern - Reverse snake (321654)",
+            "pin": "321654",
+            "demographics": None,
+            "pin_length": 6,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        },
+        {
+            "name": "Test 59: Keyboard pattern - Middle rows (789456)",
+            "pin": "789456",
+            "demographics": None,
+            "pin_length": 6,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        },
+        {
+            "name": "Test 60: Keyboard pattern - Left-right zigzag (159753)",
+            "pin": "159753",
+            "demographics": None,
+            "pin_length": 6,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        },
+        {
+            "name": "Test 61: Keyboard pattern - Knight's move reversed (258147)",
+            "pin": "258147",
+            "demographics": None,
+            "pin_length": 6,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        },
+        {
+            "name": "Test 62: Keyboard pattern - Right column pattern (369258)",
+            "pin": "369258",
+            "demographics": None,
+            "pin_length": 6,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        },
+        {
+            "name": "Test 63: Keyboard pattern - Left column pattern (741852)",
+            "pin": "741852",
+            "demographics": None,
+            "pin_length": 6,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        },
+        {
+            "name": "Test 64: Keyboard pattern - Right diagonal snake (852963)",
+            "pin": "852963",
+            "demographics": None,
+            "pin_length": 6,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        },
+        {
+            "name": "Test 65: Keyboard pattern - Circular pattern (963147)",
+            "pin": "963147",
+            "demographics": None,
+            "pin_length": 6,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        },
+
+        # Additional keyboard pattern tests
+        {
+            "name": "Test 66: Keyboard pattern - Mixed with demographic data",
+            "pin": "7410",
+            "demographics": {"dob": "1990-10-07"},
+            "pin_length": 4,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        },
+        {
+            "name": "Test 67: Keyboard pattern - Sequential with common PIN",
+            "pin": "123456",
+            "demographics": None,
+            "pin_length": 6,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        },
+        {
+            "name": "Test 68: Keyboard pattern - Reverse sequential",
+            "pin": "654321",
+            "demographics": None,
+            "pin_length": 6,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        },
+        {
+            "name": "Test 69: Keyboard pattern - Middle sequential",
+            "pin": "456789",
+            "demographics": None,
+            "pin_length": 6,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        },
+        {
+            "name": "Test 70: Keyboard pattern - Wrapping pattern",
+            "pin": "789123",
+            "demographics": None,
+            "pin_length": 6,
+            "expected": {
+                "strength": "WEAK",
+                "weakness_reasons": ["COMMONLY_USED"]
+            }
+        } ,
+
     ]
 
     # Run the tests
